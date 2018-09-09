@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+   ca.example.com:
+    container_name: ca.example.com
+    image: hyperledger/fabric-ca:latest
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.example.com
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.example.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/52219d0d3581cd5d8751e90f47a86a96231421f54651ffc970a13302f58a709b_sk
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    volumes:
+      - ../crypto-config/peerOrganizations/example.com/ca/:/etc/hyperledger/fabric-ca-server-config    
+    ports:
+      - 7054:7054

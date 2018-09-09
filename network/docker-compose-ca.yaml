@@ -1,0 +1,16 @@
+version: '2'
+
+volumes:
+  ca.example.com:
+
+networks:
+  new:
+
+services:
+  ca.example.com:
+      extends:
+        file: base/docker-compose-ca-base.yaml
+        service: ca.example.com
+      container_name: ca.example.com
+      networks:
+        - new

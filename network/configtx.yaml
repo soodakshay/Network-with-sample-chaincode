@@ -1,0 +1,80 @@
+Organizations:
+- Name: orderer
+  ID: ordererMSP
+  MSPDir: crypto-config/ordererOrganizations/orderer.com/msp
+- Name: example
+  ID: exampleMSP
+  MSPDir: crypto-config/peerOrganizations/example.com/msp
+  AnchorPeers:
+  - Host: peer0.example.com
+    Port: 7051
+Capabilities:
+  Application:
+    V1_2: true
+  Global:
+    V1_1: true
+  Orderer:
+    V1_1: true
+Application:
+  Organizations: []
+Orderer:
+  OrdererType: solo
+  Addresses:
+  - orderer0.orderer.com:7050
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 10
+    AbsoluteMaxBytes: 99 MB
+    PreferredMaxBytes: 512 KB
+  Kafka:
+    Brokers:
+    - 127.0.0.1:9092
+  Organizations:
+  - Name: orderer
+    ID: ordererMSP
+    MSPDir: crypto-config/ordererOrganizations/orderer.com/msp
+  Capabilities:
+    V1_1: true
+Profiles:
+  OrdererGenesis:
+    Capabilities:
+      V1_1: true
+    Orderer:
+      OrdererType: solo
+      Addresses:
+      - orderer0.orderer.com:7050
+      BatchTimeout: 2s
+      BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+      Kafka:
+        Brokers:
+        - 127.0.0.1:9092
+      Organizations:
+      - Name: orderer
+        ID: ordererMSP
+        MSPDir: crypto-config/ordererOrganizations/orderer.com/msp
+      Capabilities:
+        V1_1: true
+    Consortiums:
+      Consortium:
+        Organizations:
+        - Name: example
+          ID: exampleMSP
+          MSPDir: crypto-config/peerOrganizations/example.com/msp
+          AnchorPeers:
+          - Host: peer0.example.com
+            Port: 7051
+  mychannel:
+    Consortium: Consortium
+    Application:
+      Organizations:
+      - Name: example
+        ID: exampleMSP
+        MSPDir: crypto-config/peerOrganizations/example.com/msp
+        AnchorPeers:
+        - Host: peer0.example.com
+          Port: 7051
+      Capabilities:
+        V1_2: true
